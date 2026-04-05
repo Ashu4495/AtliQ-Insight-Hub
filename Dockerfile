@@ -26,8 +26,18 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN python -m spacy download en_core_web_sm && \
     python -m spacy download en_core_web_md
 
+# Pre-download the embedding model to avoid runtime downloads
+ENV HF_HOME=/app/.cache/huggingface
+RUN mkdir -p $HF_HOME
+RUN python -c "from langchain_huggingface import HuggingFaceEmbeddings; HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')"
+
 # Copy the rest of the application code
 COPY . .
+
+# IMPORTANT: Build the Knowledge Base (ChromaDB) during the Docker build
+# This ensures a clean, compatible database is baked INTO the image.
+# We set PYTHONPATH to include the current directory so src is importable.
+RUN PYTHONPATH=. python src/ingestion/vectorstore/chroma_store.py
 
 # Expose the port the app runs on
 EXPOSE 8080

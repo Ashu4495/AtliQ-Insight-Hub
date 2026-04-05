@@ -91,9 +91,23 @@ def api_login():
         "date_of_joining": user_data['date_of_joining']
     })
 
+# --- Validation and Initialization ---
+@app.before_request
+def check_environment():
+    # Only checks once
+    if not hasattr(app, 'env_checked'):
+        if not os.getenv("GROQ_API_KEY"):
+            app.logger.error("FATAL: GROQ_API_KEY is missing from environment variables!")
+        else:
+            app.logger.info("GROQ_API_KEY found. Brain ready.")
+        app.env_checked = True
+
 @app.route("/api/chat", methods=["POST"])
 def api_chat():
     data = request.json
+    if not data:
+        return jsonify({"error": "No data in request"}), 400
+        
     question = data.get("question")
     role = data.get("role", "employee")
     history = data.get("history", [])
@@ -109,10 +123,7 @@ def api_chat():
         "role": specific_role
     }
     
-    # Extract role for retriever filtering
-    role = data.get("role", "employee")
-    
-    print(f"DEBUG: Request from {user_name} ({role}) - Quest: {question[:50]}...")
+    print(f"DEBUG: Request from {user_name} ({role}) - Quest: {question[:50] if question else 'None'}...")
 
     if not question:
         return jsonify({"error": "No question provided"}), 400
@@ -125,6 +136,7 @@ def api_chat():
                 formatted_history.append(HumanMessage(content=history[i]))
                 formatted_history.append(AIMessage(content=history[i+1]))
 
+        # The core brain call
         result = run_chain(question, formatted_history, role=role, user_context=user_context)
         
         return jsonify({
@@ -132,10 +144,22 @@ def api_chat():
             "sources": [doc.metadata.get("source", "unknown") for doc in result.get("source_documents", [])]
         })
     except Exception as e:
-        print(f"Error in /api/chat: {e}")
+        error_msg = str(e)
+        print(f"Error in /api/chat: {error_msg}")
         import traceback
         traceback.print_exc()
-        return jsonify({"error": str(e)}), 500
+        
+        # Provide a friendlier error message for common failures
+        if "rate limit" in error_msg.lower():
+            friendly_err = "The AI is currently busy (Rate Limit). Please try again in a few seconds."
+        elif "api key" in error_msg.lower():
+            friendly_err = "Brain API key issue. Backend admin needs to check configurations."
+        elif "type" in error_msg.lower() or "chroma" in error_msg.lower():
+            friendly_err = "Knowledge Base (Brain) was corrupted. It is now self-healing. Please wait 2-3 minutes and refresh."
+        else:
+            friendly_err = f"Brain Connection Error: {error_msg}. Please check logs."
+            
+        return jsonify({"error": friendly_err}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

@@ -205,6 +205,17 @@ def load_vectorstore(mode: str = "persistent") -> Chroma:
              logger.warning("Vector store loaded but collection is empty. Forcing re-index.")
              raise RuntimeError("Empty vector store.")
 
+        # --- VALIDATION SEARCH ---
+        # Some ChromaDB errors (like KeyError: '_type') only appear during search.
+        # We perform a tiny search to ensure the vector store is actually healthy.
+        logger.info("Validating vector store health with a test search...")
+        try:
+            vectorstore.similarity_search("health check", k=1)
+            logger.info("Vector store health check passed.")
+        except Exception as search_error:
+            logger.error(f"Vector store health check failed: {search_error}")
+            raise search_error
+
         logger.info(f"Loaded existing vector store. Documents in collection: {doc_count}")
         return vectorstore
 
