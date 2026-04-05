@@ -1,7 +1,10 @@
 # AtliQ Insight Hub - Smart Chat Assistant 🚀
 
-**Source Code & Repository:** [https://github.com/Ashu4495/AtliQ-Insight-Hub]
-**Live Application (Production):** `https://chatbot-app-265378659018.us-central1.run.app`
+| **Project Hub** | **Live Deployment** |
+| :--- | :--- |
+| 🔗 [GitHub Repository](https://github.com/Ashu4495/AtliQ-Insight-Hub) | ⚡ [Production App](https://chatbot-app-265378659018.us-central1.run.app) |
+
+---
 
 AtliQ Insight Hub is a professional, RAG-powered (Retrieval-Augmented Generation) chatbot designed for enterprise intelligence. It allows employees to securely query internal company data across Departments such as **HR**, **Finance**, and **Engineering**.
 
