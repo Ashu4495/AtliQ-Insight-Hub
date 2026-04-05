@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | AtliQ Insight Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#872d00",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "primary": "#00288e",
+                        "outline-variant": "#c4c5d5",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "on-primary-container": "#a8b8ff",
+                        "tertiary": "#611e00",
+                        "surface-variant": "#d5e3fc",
+                        "surface-tint": "#3755c3",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed-variant": "#173bab",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "secondary-fixed": "#dde1ff",
+                        "on-background": "#0d1c2e",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#525c87",
+                        "secondary-container": "#c3ccfe",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#4c5680",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "inverse-surface": "#233144",
+                        "on-primary-fixed": "#001453",
+                        "surface": "#f8f9ff",
+                        "surface-dim": "#ccdbf3",
+                        "on-surface": "#0d1c2e",
+                        "on-tertiary-container": "#ffa583",
+                        "on-secondary-fixed": "#0e1840",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#444653",
+                        "on-secondary-fixed-variant": "#3b446e",
+                        "outline": "#757684",
+                        "primary-container": "#1e40af",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-primary": "#b8c4ff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bbc4f6",
+                        "on-tertiary-fixed": "#380d00",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col selection:bg-primary-fixed-dim">
+<!-- Top Navigation (Suppressed for focused login task, showing simple brand anchor) -->
+<header class="fixed top-0 w-full z-50 px-8 h-16 flex items-center justify-center">
+<span class="text-xl font-bold tracking-tight text-blue-900">AtliQ Insight Hub</span>
+</header>
+<main class="flex-grow flex items-center justify-center p-6 relative overflow-hidden">
+<!-- Background Decorative Elements (Asymmetric Balance) -->
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-tertiary-fixed/20 rounded-full blur-3xl"></div>
+<!-- Login / Transition Container -->
+<div class="w-full max-w-[440px] relative">
+<!-- State 1: Login Form -->
+<div class="surface-container-lowest p-10 rounded-full shadow-sm" id="login-state">
+<div class="mb-10 text-center">
+<h1 class="text-3xl font-extrabold text-on-background tracking-tight mb-2">Welcome Back</h1>
+<p class="text-on-surface-variant text-sm font-medium">Please enter your credentials to continue.</p>
+</div>
+<form class="space-y-6" onsubmit="handleLogin(event)">
+<div class="space-y-1.5">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1" for="employee-id">Employee ID</label>
+<div class="relative">
+<input class="w-full h-12 px-4 bg-surface-container-low border-0 outline outline-1 outline-outline-variant/15 rounded-xl focus:ring-2 focus:ring-primary/20 focus:outline-primary transition-all text-on-surface placeholder:text-outline/50" id="employee-id" placeholder="shr8874" required="" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-center px-1">
+<label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant" for="password">Password</label>
+<a class="text-xs font-semibold text-primary hover:text-primary-container transition-colors" href="javascript:void(0)" onclick="alert('Please contact IT to reset your Employee ID password.')">Forgot?</a>
+</div>
+<div class="relative">
+<input class="w-full h-12 px-4 bg-surface-container-low border-0 outline outline-1 outline-outline-variant/15 rounded-xl focus:ring-2 focus:ring-primary/20 focus:outline-primary transition-all text-on-surface placeholder:text-outline/50" id="password" placeholder="••••" required="" type="password"/>
+</div>
+<p id="error-msg" class="text-[10px] text-red-500 font-bold ml-1 hidden"></p>
+</div>
+<button class="w-full h-14 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-xl text-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+                        Login
+                        <span class="material-symbols-outlined text-xl">login</span>
+</button>
+</form>
+</div>
+<!-- State 2: Role Detection (Hidden by default) -->
+<div class="hidden surface-container-lowest p-10 rounded-full shadow-sm text-center relative overflow-hidden" id="welcome-state">
+<!-- Context Rail (Finance Green Accent) -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-[#22c55e]"></div>
+<div class="relative z-10">
+<h2 class="text-4xl font-extrabold text-on-background tracking-tight mb-4">Welcome, User 👋</h2>
+<div class="space-y-4 mb-10">
+<div class="inline-flex items-center gap-3 px-4 py-2 bg-[#f0fdf4] rounded-full">
+<span class="material-symbols-outlined text-[#166534] text-lg">account_balance</span>
+<span class="text-sm font-bold text-[#166534]" id="welcome-dept-text">Department: Office</span>
+</div>
+<p class="text-on-surface-variant font-medium text-lg" id="welcome-role-text">Role: Employee</p>
+</div>
+<div class="space-y-3">
+<button class="w-full h-14 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-xl text-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2" onclick="location.href='/dashboard'">
+                            Enter Dashboard
+                            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<p class="text-xs text-outline font-medium">Authenticating your session...</p>
+</div>
+</div>
+<!-- Subtle Success Pulse -->
+<div class="absolute inset-0 bg-gradient-to-b from-[#22c55e]/5 to-transparent pointer-events-none"></div>
+</div>
+</div>
+</main>
+<!-- Footer (Minimalistic Version) -->
+<footer class="w-full px-12 py-8 flex flex-col md:flex-row justify-between items-center border-t border-slate-200/40">
+<div class="mb-4 md:mb-0">
+<span class="font-headline font-bold text-slate-900">AtliQ</span>
+<span class="font-inter text-xs text-slate-500 ml-4">© 2024 FinSolve Technologies. All rights reserved.</span>
+</div>
+<div class="flex gap-6">
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="javascript:void(0)" onclick="alert('Privacy Policy is available on the Intranet.')">Privacy Policy</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="javascript:void(0)" onclick="alert('Security Guidelines are available on the Intranet.')">Security</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="javascript:void(0)" onclick="alert('Please email support@atliq.com')">Contact Support</a>
+</div>
+</footer>
+<script>
+    async function handleLogin(e) {
+        e.preventDefault();
+        const employeeId = document.getElementById('employee-id').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const errorMsg = document.getElementById('error-msg');
+        
+        errorMsg.classList.add('hidden');
+
+        const apiBase = window.location.origin === "null" || window.location.protocol === "file:" ? "http://127.0.0.1:5000" : "";
+        try {
+            const response = await fetch(`${apiBase}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    login_id: employeeId,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                const role = data.role;
+                const name = data.name;
+                const dept = data.department;
+                const specificRole = data.specific_role;
+
+                localStorage.setItem('userInternalRole', role);
+                localStorage.setItem('userName', name);
+                localStorage.setItem('userDept', dept);
+                localStorage.setItem('userSpecificRole', specificRole);
+                localStorage.setItem('userEmail', data.email);
+                localStorage.setItem('userEmpId', data.employee_id);
+                localStorage.setItem('userLocation', data.location);
+                localStorage.setItem('userDoj', data.date_of_joining);
+
+                document.getElementById('login-state').classList.add('hidden');
+                document.getElementById('welcome-state').classList.remove('hidden');
+                
+                // Update welcome text
+                document.querySelector('#welcome-state h2').innerText = `Welcome, ${name} 👋`;
+                document.getElementById('welcome-role-text').innerText = `Role: ${specificRole}`;
+                document.getElementById('welcome-dept-text').innerText = `Department: ${dept}`;
+            } else {
+                errorMsg.innerText = data.error || "Login failed.";
+                errorMsg.classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error("Login fetch error:", error);
+            errorMsg.innerText = "Error connecting to server.";
+            errorMsg.classList.remove('hidden');
+        }
+    }
+</script>
+</body></html>

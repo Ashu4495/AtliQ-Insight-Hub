@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtliQ Insight Hub - Finance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#872d00",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "primary": "#00288e",
+                        "outline-variant": "#c4c5d5",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "on-primary-container": "#a8b8ff",
+                        "tertiary": "#611e00",
+                        "surface-variant": "#d5e3fc",
+                        "surface-tint": "#3755c3",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed-variant": "#173bab",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "secondary-fixed": "#dde1ff",
+                        "on-background": "#0d1c2e",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#525c87",
+                        "secondary-container": "#c3ccfe",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#4c5680",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "inverse-surface": "#233144",
+                        "on-primary-fixed": "#001453",
+                        "surface": "#f8f9ff",
+                        "surface-dim": "#ccdbf3",
+                        "on-surface": "#0d1c2e",
+                        "on-tertiary-container": "#ffa583",
+                        "on-secondary-fixed": "#0e1840",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#444653",
+                        "on-secondary-fixed-variant": "#3b446e",
+                        "outline": "#757684",
+                        "primary-container": "#1e40af",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-primary": "#b8c4ff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bbc4f6",
+                        "on-tertiary-fixed": "#380d00",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary": "#ffffff",
+                        "finance-accent": "#10b981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-slate-50 dark:bg-slate-900 border-r border-slate-200/10 dark:border-slate-800/15 flex flex-col py-6 px-4">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-black text-blue-900 dark:text-blue-50">AtliQ Insight Hub</h1>
+</div>
+<div class="mb-8 px-2 flex items-center space-x-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors" onclick="openProfileModal()">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="truncate flex-1">
+<p class="font-manrope text-sm font-bold text-blue-900 dark:text-blue-50 truncate" id="user-name-sidebar">User</p>
+<p class="font-manrope text-xs text-slate-500 dark:text-slate-400 truncate" id="user-role-sidebar">Employee</p>
+</div>
+</div>
+<button class="mb-8 w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all duration-200" onclick="location.href='/chat'">
+<span class="material-symbols-outlined text-sm">add</span>
+            New Analysis
+        </button>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 font-bold border-l-4 border-blue-900 dark:border-blue-400 cursor-pointer tap-highlight-transparent hover:translate-x-1 transition-transform duration-200" href="/dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-manrope text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer tap-highlight-transparent hover:translate-x-1 transition-transform duration-200" href="/chat">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-manrope text-sm">Smart Chat</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer tap-highlight-transparent hover:translate-x-1 transition-transform duration-200" href="javascript:void(0)" onclick="openSettings()">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope text-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pb-4 flex justify-center">
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-error transition-colors cursor-pointer tap-highlight-transparent" href="/" onclick="localStorage.clear()">
+<span class="material-symbols-outlined text-error">logout</span>
+<span class="font-manrope text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-12">
+<!-- Header Editorial Moment -->
+<header class="max-w-5xl mb-16">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-8 h-1 bg-finance-accent rounded-full"></span>
+<span class="text-xs font-bold tracking-widest text-finance-accent uppercase">Finance Intelligence</span>
+</div>
+<h1 class="text-5xl font-extrabold tracking-tight text-on-background mb-6" id="dashboard-greeting">Good morning, User.</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl leading-relaxed">Your financial data ecosystem is synchronized. Ready to extract insights from Q3 performance and upcoming budget forecasts.</p>
+</header>
+<!-- Bento Layout for Key Sections -->
+<div class="max-w-6xl grid grid-cols-12 gap-8">
+<!-- Key Section 1: Suggested Queries (Bento Large) -->
+<section class="col-span-12 lg:col-span-8">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl font-bold text-on-background">Suggested Queries</h2>
+<span class="px-3 py-1 bg-surface-container text-primary text-xs font-bold rounded-full">AI DRIVEN</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Query Card 1 -->
+<button class="group text-left p-6 bg-surface-container-lowest border border-outline-variant/15 rounded-xl hover:bg-surface-container-low transition-all duration-300 active:scale-[0.98]" onclick="location.href='/chat?q=Analyze Q3 revenue trends'">
+<div class="flex items-start justify-between mb-4">
+<span class="material-symbols-outlined text-finance-accent">analytics</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_outward</span>
+</div>
+<p class="font-headline font-bold text-on-surface mb-2">Analyze Q3 revenue trends</p>
+<p class="text-xs text-on-surface-variant">Compare current quarter performance against historical averages and growth targets.</p>
+</button>
+<!-- Query Card 2 -->
+<button class="group text-left p-6 bg-surface-container-lowest border border-outline-variant/15 rounded-xl hover:bg-surface-container-low transition-all duration-300 active:scale-[0.98]" onclick="location.href='/chat?q=Summarize latest budget forecast'">
+<div class="flex items-start justify-between mb-4">
+<span class="material-symbols-outlined text-finance-accent">summarize</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_outward</span>
+</div>
+<p class="font-headline font-bold text-on-surface mb-2">Summarize latest budget forecast</p>
+<p class="text-xs text-on-surface-variant">Get a concise breakdown of executive spending limits and projected variances.</p>
+</button>
+<!-- Query Card 3 -->
+<button class="group text-left p-6 bg-surface-container-lowest border border-outline-variant/15 rounded-xl hover:bg-surface-container-low transition-all duration-300 active:scale-[0.98]" onclick="location.href='/chat?q=Identify margin anomalies'">
+<div class="flex items-start justify-between mb-4">
+<span class="material-symbols-outlined text-finance-accent">warning</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_outward</span>
+</div>
+<p class="font-headline font-bold text-on-surface mb-2">Identify margin anomalies</p>
+<p class="text-xs text-on-surface-variant">Scan regional datasets for unexplained drops in operational margins this month.</p>
+</button>
+<!-- Query Card 4 -->
+<button class="group text-left p-6 bg-surface-container-lowest border border-outline-variant/15 rounded-xl hover:bg-surface-container-low transition-all duration-300 active:scale-[0.98]" onclick="location.href='/chat?q=Audit vendor compliance'">
+<div class="flex items-start justify-between mb-4">
+<span class="material-symbols-outlined text-finance-accent">receipt_long</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">arrow_outward</span>
+</div>
+<p class="font-headline font-bold text-on-surface mb-2">Audit vendor compliance</p>
+<p class="text-xs text-on-surface-variant">Run a verification check on invoice processing times across Tier 1 suppliers.</p>
+</button>
+</div>
+</section>
+<!-- Key Section 2: Knowledge Health Indicator (Bento Side) -->
+<section class="col-span-12 lg:col-span-4 flex flex-col gap-8">
+<div class="p-8 bg-surface-container-low rounded-xl border-l-4 border-finance-accent relative overflow-hidden">
+<!-- Subtle Background Texture -->
+<div class="absolute right-0 top-0 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-9xl">database</span>
+</div>
+<h2 class="text-xl font-bold text-on-background mb-8">Knowledge Health</h2>
+<div class="relative w-40 h-40 mx-auto mb-8">
+<!-- Simple Gauge Placeholder via SVG -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-variant" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-finance-accent" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="44" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-black text-on-background">94%</span>
+<span class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase">Sync Rate</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="text-sm font-medium text-on-surface-variant">Docs Indexed</span>
+</div>
+<span class="text-sm font-bold text-on-background">14,520</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">update</span>
+<span class="text-sm font-medium text-on-surface-variant">Last Updated</span>
+</div>
+<span class="text-sm font-bold text-on-background">12 minutes ago</span>
+</div>
+<div class="pt-6 border-t border-outline-variant/20">
+<div class="flex items-center gap-2 text-finance-accent">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span class="text-xs font-bold uppercase tracking-wider">All Systems Operational</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Visual Component: Departmental Context -->
+</section>
+</div>
+<!-- Transactional/Data Highlight Area (No Borders, Tonal Shifting) -->
+<section class="max-w-6xl mt-20">
+<h3 class="text-lg font-bold text-on-surface-variant mb-6">Recent Intelligence Reports</h3>
+<div class="space-y-4">
+<div class="flex items-center p-4 bg-surface-container-lowest rounded-xl hover:translate-x-1 transition-transform cursor-pointer">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">article</span>
+</div>
+<div class="ml-4 flex-1">
+<p class="font-headline font-bold text-on-surface">Monthly Liquidity Assessment</p>
+<p class="text-xs text-on-surface-variant">Generated by AI Engine • Oct 14, 2024</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-on-surface-variant">4.2 MB</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+</div>
+<div class="flex items-center p-4 bg-surface-container-low/50 rounded-xl hover:translate-x-1 transition-transform cursor-pointer border-l-4 border-transparent hover:border-finance-accent">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">insert_chart</span>
+</div>
+<div class="ml-4 flex-1">
+<p class="font-headline font-bold text-on-surface">Regional P&amp;L Divergence Report</p>
+<p class="text-xs text-on-surface-variant">Data Pipeline Alpha • Oct 12, 2024</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-on-surface-variant">1.8 MB</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const name = localStorage.getItem('userName') || 'User';
+        const role = localStorage.getItem('userSpecificRole') || 'Employee';
+        const sidebarName = document.getElementById('user-name-sidebar');
+        const sidebarRole = document.getElementById('user-role-sidebar');
+        if (sidebarName) sidebarName.innerText = name;
+        if (sidebarRole) sidebarRole.innerText = role;
+        const headerWelcome = document.getElementById('dashboard-greeting');
+        if (headerWelcome) {
+            headerWelcome.innerText = `Good morning, ${name.split(' ')[0]}.`;
+        }
+        loadSettings();
+    });
+
+    // Settings Logic
+    function openSettings() {
+        document.getElementById('settings-modal').classList.remove('hidden');
+    }
+    
+    function closeSettings() {
+        document.getElementById('settings-modal').classList.add('hidden');
+    }
+
+    // Profile Logic
+    function openProfileModal() {
+        document.getElementById('profile-name').innerText = localStorage.getItem('userName') || 'User';
+        document.getElementById('profile-role').innerText = localStorage.getItem('userSpecificRole') || 'Employee';
+        document.getElementById('profile-dept').innerText = localStorage.getItem('userDept') || 'Unknown';
+        document.getElementById('profile-email').innerText = localStorage.getItem('userEmail') || 'N/A';
+        document.getElementById('profile-emp-id').innerText = localStorage.getItem('userEmpId') || 'N/A';
+        document.getElementById('profile-location').innerText = localStorage.getItem('userLocation') || 'N/A';
+        document.getElementById('profile-doj').innerText = localStorage.getItem('userDoj') || 'N/A';
+        document.getElementById('profile-modal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profile-modal').classList.add('hidden');
+    }
+    
+    function setTheme(theme) {
+        document.documentElement.className = theme;
+        localStorage.setItem('app_theme', theme);
+        document.getElementById('theme-btn-light').className = theme === 'light' 
+            ? "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary"
+            : "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface";
+        document.getElementById('theme-btn-dark').className = theme === 'dark' 
+            ? "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary"
+            : "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface";
+    }
+
+    function setFontSize(val) {
+        document.body.style.fontSize = val + '%';
+        document.getElementById('fontSizeLabel').innerText = val + '%';
+        localStorage.setItem('app_fontSize', val);
+    }
+
+    function setFontFamily(val) {
+        document.body.style.fontFamily = val.replace('font-', '');
+        localStorage.setItem('app_fontFamily', val);
+    }
+
+    function toggleNightLight() {
+        const isChecked = document.getElementById('nightLightToggle').checked;
+        document.getElementById('night-light-overlay').style.opacity = isChecked ? '0.15' : '0';
+        localStorage.setItem('app_nightLight', isChecked ? 'true' : 'false');
+    }
+
+    function loadSettings() {
+        const savedTheme = localStorage.getItem('app_theme') || 'light';
+        setTheme(savedTheme);
+        const savedSize = localStorage.getItem('app_fontSize') || '100';
+        document.getElementById('fontSizeSlider').value = savedSize;
+        setFontSize(savedSize);
+        const savedFont = localStorage.getItem('app_fontFamily') || 'font-manrope';
+        document.getElementById('fontSelect').value = savedFont;
+        setFontFamily(savedFont);
+        const savedNightLight = localStorage.getItem('app_nightLight') === 'true';
+        document.getElementById('nightLightToggle').checked = savedNightLight;
+        toggleNightLight();
+    }
+</script>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="closeSettings()"></div>
+    <div class="relative bg-surface rounded-2xl shadow-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-on-surface">Settings</h2>
+            <button onclick="closeSettings()" class="text-on-surface-variant hover:text-primary transition-colors p-1">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Theme -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Theme Mode</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setTheme('light')" id="theme-btn-light" class="p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary">Light</button>
+                    <button onclick="setTheme('dark')" id="theme-btn-dark" class="p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface">Dark</button>
+                </div>
+            </div>
+
+            <!-- Font Size -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Text Size</label>
+                <input type="range" id="fontSizeSlider" min="80" max="150" value="100" class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" oninput="setFontSize(this.value)">
+                <div class="flex justify-between text-xs text-on-surface-variant mt-1">
+                    <span>A</span>
+                    <span class="text-base text-primary font-bold" id="fontSizeLabel">100%</span>
+                    <span class="text-lg">A</span>
+                </div>
+            </div>
+
+            <!-- Font Style -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Font Style</label>
+                <select id="fontSelect" onchange="setFontFamily(this.value)" class="w-full p-3 bg-surface-container-lowest border border-outline-variant/30 rounded-xl text-sm outline-none focus:border-primary text-on-surface">
+                    <option value="font-manrope">Manrope (Modern)</option>
+                    <option value="font-inter">Inter (Classic)</option>
+                    <option value="font-serif">Serif (Reading)</option>
+                    <option value="font-monospace">Monospace (Code)</option>
+                </select>
+            </div>
+
+            <!-- Night Light -->
+            <div class="flex items-center justify-between border-t border-outline-variant/20 pt-5">
+                <label class="text-sm font-bold text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-orange-500">nights_stay</span>
+                    Night Light Filter
+                </label>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="nightLightToggle" class="sr-only peer" onchange="toggleNightLight()">
+                    <div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dark body { background-color: #121212; color: #e0e0e0; }
+.dark .bg-surface-container-lowest { background-color: #1e1e1e; border-color: #333; }
+.dark .text-on-surface { color: #f5f5f5; }
+.dark .bg-surface-container-high { background-color: #424242; }
+.dark .bg-surface-container { background-color: #2a2a2a; }
+.dark .bg-surface { background-color: #212121; }
+</style>
+
+<!-- Profile Modal -->
+<div id="profile-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="closeProfileModal()"></div>
+    <div class="relative bg-surface rounded-2xl shadow-xl w-full max-w-sm p-6 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-primary to-primary-container z-0"></div>
+        <button onclick="closeProfileModal()" class="absolute top-3 right-3 text-white hover:text-white/80 transition-colors p-1 z-10 bg-black/20 rounded-full">
+            <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+        <div class="relative z-10 flex flex-col items-center mt-6">
+            <div class="w-20 h-20 bg-surface-container-lowest rounded-full p-1 shadow-md mb-3">
+                <div class="w-full h-full bg-primary/10 rounded-full flex items-center justify-center text-primary border border-outline-variant/30">
+                    <span class="material-symbols-outlined text-4xl">person</span>
+                </div>
+            </div>
+            <h2 class="text-xl font-bold text-on-surface" id="profile-name">User Name</h2>
+            <p class="text-xs font-bold text-primary tracking-wide uppercase mt-1" id="profile-role">Specific Role</p>
+        </div>
+        <div class="mt-6 space-y-4">
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Department</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-dept">Department</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Email Address</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-email">email@fintechco.com</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-outline">Employee ID</span>
+                    <span class="text-sm font-medium text-on-surface" id="profile-emp-id">EMP1000</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-outline">Location</span>
+                    <span class="text-sm font-medium text-on-surface" id="profile-location">City</span>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Date of Joining</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-doj">YYYY-MM-DD</span>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center gap-2 text-xs text-outline justify-center">
+            <span class="material-symbols-outlined text-[14px]">lock</span>
+            <span>Confidential Data Secured</span>
+        </div>
+    </div>
+</div>
+
+<!-- Global Night Light Overlay -->
+<div id="night-light-overlay" class="fixed inset-0 bg-[#ff9000] mix-blend-multiply opacity-0 pointer-events-none transition-opacity duration-700 z-[9999]" style="mix-blend-mode: multiply;"></div>
+</body></html>

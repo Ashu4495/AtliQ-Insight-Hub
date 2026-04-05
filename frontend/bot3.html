@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Chat | AtliQ Insight Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#872d00",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "primary": "#00288e",
+                        "outline-variant": "#c4c5d5",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "on-primary-container": "#a8b8ff",
+                        "tertiary": "#611e00",
+                        "surface-variant": "#d5e3fc",
+                        "surface-tint": "#3755c3",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed-variant": "#173bab",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "secondary-fixed": "#dde1ff",
+                        "on-background": "#0d1c2e",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#525c87",
+                        "secondary-container": "#c3ccfe",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#4c5680",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "inverse-surface": "#233144",
+                        "on-primary-fixed": "#001453",
+                        "surface": "#f8f9ff",
+                        "surface-dim": "#ccdbf3",
+                        "on-surface": "#0d1c2e",
+                        "on-tertiary-container": "#ffa583",
+                        "on-secondary-fixed": "#0e1840",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#444653",
+                        "on-secondary-fixed-variant": "#3b446e",
+                        "outline": "#757684",
+                        "primary-container": "#1e40af",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-primary": "#b8c4ff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bbc4f6",
+                        "on-tertiary-fixed": "#380d00",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c4c5d5; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface overflow-hidden">
+<!-- SideNavBar (The Blueprint) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-slate-50 dark:bg-slate-900 border-r border-slate-200/10 dark:border-slate-800/15 flex flex-col py-6 px-4 h-full">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-black text-blue-900 dark:text-blue-50 tracking-tight">AtliQ Insight Hub</h1>
+</div>
+<div class="mb-6">
+<button class="w-full py-3 px-4 flex items-center gap-3 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-xl font-medium shadow-sm hover:opacity-90 active:scale-95 transition-all" onclick="window.location.reload()">
+<span class="material-symbols-outlined">add</span>
+<span>New Analysis</span>
+</button>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto">
+<!-- Navigation Links -->
+<a class="flex items-center gap-3 py-2.5 px-4 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-transform duration-200 hover:translate-x-1 font-manrope text-sm cursor-pointer tap-highlight-transparent rounded-lg" href="/dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-2.5 px-4 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 font-bold border-l-4 border-blue-900 dark:border-blue-400 font-manrope text-sm cursor-pointer tap-highlight-transparent rounded-r-lg" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span>Smart Chat</span>
+</a>
+<a class="flex items-center gap-3 py-2.5 px-4 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-transform duration-200 hover:translate-x-1 font-manrope text-sm cursor-pointer tap-highlight-transparent rounded-lg" href="javascript:void(0)" onclick="alert('Knowledge Base feature coming soon!')">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span>Knowledge Base</span>
+</a>
+<!-- Sidebar Section: Chat History -->
+<div class="pt-6 pb-2 px-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60">Chat History</span>
+</div>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs truncate" href="javascript:void(0)" onclick="setQuery('Show me Q3 Revenue Analysis')">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="truncate">Q3 Revenue Analysis</span>
+</a>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs truncate" href="javascript:void(0)" onclick="setQuery('Show me Expense Report Summaries')">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="truncate">Expense Report Summaries</span>
+</a>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs truncate" href="javascript:void(0)" onclick="setQuery('Show me Fiscal Year 2024 Targets')">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="truncate">Fiscal Year 2024 Targets</span>
+</a>
+<!-- Sidebar Section: Saved -->
+<div class="pt-6 pb-2 px-4">
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60">Saved Answers</span>
+</div>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs truncate" href="javascript:void(0)" onclick="setQuery('What is the EBITDA Formula?')">
+<span class="material-symbols-outlined text-sm">bookmark</span>
+<span class="truncate">EBITDA Formula</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200/50 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 mb-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" onclick="openProfileModal()">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-base">person</span>
+</div>
+<div class="overflow-hidden">
+<p class="text-xs font-bold text-blue-900 dark:text-blue-100 truncate" id="chat-user-name">User</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 truncate" id="chat-user-role">Employee</p>
+</div>
+</div>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs" href="javascript:void(0)" onclick="alert('Help Center opening soon')">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:bg-slate-100 transition-all rounded-lg text-xs" href="javascript:void(0)" onclick="openSettings()">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 py-2 px-4 text-slate-500 hover:text-error transition-all rounded-lg text-xs mt-2" href="/" onclick="localStorage.clear()">
+<span class="material-symbols-outlined text-sm text-error">logout</span>
+<span class="text-error font-bold">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 h-screen flex flex-col relative bg-surface">
+<!-- Top Header Area -->
+<header class="h-16 flex items-center justify-between px-8 bg-surface-bright/80 backdrop-blur-md z-30">
+<div class="flex items-center gap-3">
+<span class="w-2 h-6 bg-tertiary-fixed rounded-full"></span>
+<h2 class="text-xl font-headline font-bold text-on-surface">Smart Chat</h2>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase tracking-wider">v2.4 Live</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</header>
+<!-- Message Stream -->
+<section class="flex-1 overflow-y-auto px-8 py-6 space-y-8 scroll-smooth">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2 max-w-3xl ml-auto">
+<div class="bg-primary text-on-primary px-5 py-3 rounded-2xl rounded-tr-none shadow-sm text-sm leading-relaxed">
+                    Can you provide a summary of our Q3 revenue compared to the projected targets, specifically for the North American region?
+                </div>
+<span class="text-[10px] text-on-surface-variant font-medium">10:42 AM • Sent</span>
+</div>
+<!-- AI Response -->
+<div class="flex flex-col items-start gap-4 max-w-4xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-blue-900 flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<span class="text-sm font-headline font-bold text-on-surface">AtliQ Intelligence</span>
+</div>
+<div class="w-full bg-surface-container-lowest border border-outline-variant/15 p-6 rounded-2xl shadow-sm space-y-4">
+<div class="border-l-4 border-tertiary-fixed-dim pl-4">
+<p class="text-on-surface leading-relaxed text-sm">
+                            Based on the Q3 Financial Statements, here is the performance summary for the North American region. We observed a significant growth in SaaS subscriptions, though consulting revenue lagged slightly behind targets.
+                        </p>
+</div>
+<!-- Data Component: Mini Table -->
+<div class="bg-surface-container-low rounded-xl p-4 overflow-hidden">
+<table class="w-full text-left text-xs border-separate border-spacing-y-2">
+<thead>
+<tr class="text-on-surface-variant font-bold uppercase tracking-tighter">
+<th class="pb-2">Metric</th>
+<th class="pb-2">Target ($M)</th>
+<th class="pb-2">Actual ($M)</th>
+<th class="pb-2">Variance (%)</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<tr class="bg-surface-container-lowest/50">
+<td class="py-3 px-3 rounded-l-lg font-medium">Product SaaS</td>
+<td class="py-3 px-3">12.5</td>
+<td class="py-3 px-3">14.2</td>
+<td class="py-3 px-3 rounded-r-lg text-emerald-600 font-bold">+13.6%</td>
+</tr>
+<tr class="bg-surface-container-lowest/50">
+<td class="py-3 px-3 rounded-l-lg font-medium">Consulting Services</td>
+<td class="py-3 px-3">8.0</td>
+<td class="py-3 px-3">7.1</td>
+<td class="py-3 px-3 rounded-r-lg text-error font-bold">-11.2%</td>
+</tr>
+<tr class="bg-surface-container-lowest/50">
+<td class="py-3 px-3 rounded-l-lg font-medium">Support Maintenance</td>
+<td class="py-3 px-3">4.5</td>
+<td class="py-3 px-3">4.6</td>
+<td class="py-3 px-3 rounded-r-lg text-emerald-600 font-bold">+2.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex flex-wrap gap-2 pt-2">
+<button class="px-3 py-1.5 bg-surface-container rounded-full text-[11px] font-medium text-primary hover:bg-primary/5 transition-all">Download Report</button>
+<button class="px-3 py-1.5 bg-surface-container rounded-full text-[11px] font-medium text-primary hover:bg-primary/5 transition-all">Show Graph</button>
+<button class="px-3 py-1.5 bg-surface-container rounded-full text-[11px] font-medium text-primary hover:bg-primary/5 transition-all">Save to Knowledge Base</button>
+</div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">10:42 AM • AI Generated</span>
+</div>
+<!-- AI Typing Indicator (Placeholder) -->
+<div class="flex items-center gap-3 animate-pulse">
+<div class="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-base">smart_toy</span>
+</div>
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+<div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+<div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Chat Input Area -->
+<footer class="p-8 pt-2">
+<div class="max-w-4xl mx-auto relative group">
+<div class="absolute inset-0 bg-primary/5 blur-2xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+<form class="relative bg-surface-container-lowest border border-outline-variant/30 rounded-2xl shadow-xl p-2 pl-4 flex items-center gap-2 ring-1 ring-black/5" id="chat-form">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-3 text-on-surface placeholder:text-on-surface-variant/50" id="query-input" placeholder="Ask AtliQ anything about Finance..." type="text"/>
+<div class="flex items-center gap-1 pr-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</form>
+<div class="flex justify-center gap-4 mt-3">
+<button class="text-[10px] text-on-surface-variant/70 hover:text-primary flex items-center gap-1 transition-colors" onclick="setQuery('Draft a Budget Proposal')">
+<span class="material-symbols-outlined text-xs">auto_fix_high</span>
+                        Draft a Budget Proposal
+</button>
+<button class="text-[10px] text-on-surface-variant/70 hover:text-primary flex items-center gap-1 transition-colors" onclick="setQuery('Explain Cash Flow Variance')">
+<span class="material-symbols-outlined text-xs">analytics</span>
+                        Explain Cash Flow Variance
+</button>
+<button class="text-[10px] text-on-surface-variant/70 hover:text-primary flex items-center gap-1 transition-colors" onclick="setQuery('Summarize Audit Trail')">
+<span class="material-symbols-outlined text-xs">summarize</span>
+                        Summarize Audit Trail
+</button>
+</div>
+</div>
+</footer>
+</main>
+<!-- Context Rail for Finance -->
+<div class="fixed left-64 top-16 bottom-0 w-1 bg-tertiary-fixed opacity-40 z-20"></div>
+
+<script>
+    const chatForm = document.getElementById('chat-form');
+    const queryInput = document.getElementById('query-input');
+    const messageStream = document.querySelector('section.flex-1');
+    let chatHistory = [];
+
+    // Get user info from localStorage
+    const userRole = localStorage.getItem('userInternalRole') || 'employee';
+    const userName = localStorage.getItem('userName') || 'User';
+
+    // Handle URL parameters for suggested queries
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('q');
+        if (query) {
+            queryInput.value = query;
+            // Clean up URL without refreshing
+            window.history.replaceState({}, document.title, window.location.pathname);
+            // Optionally auto-submit
+            chatForm.dispatchEvent(new Event('submit'));
+        }
+    });
+
+    function setQuery(query) {
+        queryInput.value = query;
+        chatForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+
+    function addMessage(text, isUser = true, sources = []) {
+        const messageDiv = document.createElement('div');
+        if (isUser) {
+            messageDiv.className = 'flex flex-col items-end gap-2 max-w-3xl ml-auto';
+            messageDiv.innerHTML = `
+                <div class="bg-primary text-on-primary px-5 py-3 rounded-2xl rounded-tr-none shadow-sm text-sm leading-relaxed">
+                    ${text}
+                </div>
+                <span class="text-[10px] text-on-surface-variant font-medium">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • Sent</span>
+            `;
+        } else {
+            messageDiv.className = 'flex flex-col items-start gap-4 max-w-4xl';
+            let sourcesHtml = '';
+            if (sources && sources.length > 0) {
+                sourcesHtml = '<div class="flex flex-wrap gap-2 pt-2">' + 
+                    [...new Set(sources)].map(s => `<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-medium text-primary">${s}</span>`).join('') + 
+                    '</div>';
+            }
+
+            messageDiv.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-900 flex items-center justify-center text-white shadow-md">
+                        <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                    </div>
+                    <span class="text-sm font-headline font-bold text-on-surface">AtliQ Intelligence</span>
+                </div>
+                <div class="w-full bg-surface-container-lowest border border-outline-variant/15 p-6 rounded-2xl shadow-sm space-y-4">
+                    <div class="border-l-4 ${text.includes('⚠️') || text.includes('🔒') ? 'border-red-500' : 'border-tertiary-fixed-dim'} pl-4">
+                        <p class="text-on-surface leading-relaxed text-sm whitespace-pre-wrap">${text}</p>
+                    </div>
+                    ${sourcesHtml}
+                </div>
+                <span class="text-[10px] text-on-surface-variant font-medium">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • AI Generated</span>
+            `;
+        }
+        messageStream.appendChild(messageDiv);
+        messageStream.scrollTop = messageStream.scrollHeight;
+    }
+
+    function showLoading() {
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading-indicator';
+        loadingDiv.className = 'flex items-center gap-3 animate-pulse';
+        loadingDiv.innerHTML = `
+            <div class="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center text-slate-400">
+                <span class="material-symbols-outlined text-base">smart_toy</span>
+            </div>
+            <div class="flex gap-1">
+                <div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+                <div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+                <div class="w-1.5 h-1.5 bg-slate-300 rounded-full"></div>
+            </div>
+        `;
+        messageStream.appendChild(loadingDiv);
+        messageStream.scrollTop = messageStream.scrollHeight;
+    }
+
+    function hideLoading() {
+        const loader = document.getElementById('loading-indicator');
+        if (loader) loader.remove();
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const query = queryInput.value.trim();
+        if (!query) return;
+
+        addMessage(query, true);
+        queryInput.value = '';
+        showLoading();
+
+        const apiBase = window.location.origin === "null" || window.location.protocol === "file:" ? "http://127.0.0.1:5000" : "";
+        try {
+            const response = await fetch(`${apiBase}/api/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question: query,
+                    role: userRole,
+                    history: chatHistory,
+                    user_name: localStorage.getItem('userName') || 'User',
+                    user_department: localStorage.getItem('userDept') || 'Unknown',
+                    specific_role: localStorage.getItem('userSpecificRole') || 'Employee'
+                })
+            });
+
+            const data = await response.json();
+            hideLoading();
+
+            if (data && data.answer) {
+                addMessage(data.answer, false, data.sources);
+                chatHistory.push(query, data.answer);
+            } else if (data && data.error) {
+                // Show specific backend error if available
+                addMessage(`⚠️ **Brain Error:** ${data.error}. Please ensure the backend and all dependencies are correctly configured.`, false);
+            } else {
+                console.warn("Unexpected response data:", data);
+                addMessage(`I'm sorry, I received an incomplete response (Status: ${response.status}). Please check the server logs.`, false);
+            }
+        } catch (error) {
+            hideLoading();
+            addMessage(`Error: Could not reach the server. (Details: ${error.message}). Please ensure the backend is running.`, false);
+            console.error(error);
+        }
+    });
+
+    // Update user info from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+        const userName = localStorage.getItem('userName') || 'User';
+        const userSpecificRole = localStorage.getItem('userSpecificRole') || 'Employee';
+        const nameEl = document.getElementById('chat-user-name');
+        const roleEl = document.getElementById('chat-user-role');
+        if (nameEl) nameEl.innerText = userName;
+        if (roleEl) roleEl.innerText = userSpecificRole;
+        loadSettings();
+    });
+
+    // Settings Logic
+    function openSettings() {
+        document.getElementById('settings-modal').classList.remove('hidden');
+    }
+    
+    function closeSettings() {
+        document.getElementById('settings-modal').classList.add('hidden');
+    }
+
+    // Profile Logic
+    function openProfileModal() {
+        document.getElementById('profile-name').innerText = localStorage.getItem('userName') || 'User';
+        document.getElementById('profile-role').innerText = localStorage.getItem('userSpecificRole') || 'Employee';
+        document.getElementById('profile-dept').innerText = localStorage.getItem('userDept') || 'Unknown';
+        document.getElementById('profile-email').innerText = localStorage.getItem('userEmail') || 'N/A';
+        document.getElementById('profile-emp-id').innerText = localStorage.getItem('userEmpId') || 'N/A';
+        document.getElementById('profile-location').innerText = localStorage.getItem('userLocation') || 'N/A';
+        document.getElementById('profile-doj').innerText = localStorage.getItem('userDoj') || 'N/A';
+        document.getElementById('profile-modal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profile-modal').classList.add('hidden');
+    }
+    
+    function setTheme(theme) {
+        document.documentElement.className = theme;
+        localStorage.setItem('app_theme', theme);
+        document.getElementById('theme-btn-light').className = theme === 'light' 
+            ? "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary"
+            : "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface";
+        document.getElementById('theme-btn-dark').className = theme === 'dark' 
+            ? "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary"
+            : "p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface";
+    }
+
+    function setFontSize(val) {
+        document.body.style.fontSize = val + '%';
+        document.getElementById('fontSizeLabel').innerText = val + '%';
+        localStorage.setItem('app_fontSize', val);
+    }
+
+    function setFontFamily(val) {
+        document.body.style.fontFamily = val.replace('font-', '');
+        localStorage.setItem('app_fontFamily', val);
+    }
+
+    function toggleNightLight() {
+        const isChecked = document.getElementById('nightLightToggle').checked;
+        document.getElementById('night-light-overlay').style.opacity = isChecked ? '0.15' : '0';
+        localStorage.setItem('app_nightLight', isChecked ? 'true' : 'false');
+    }
+
+    function loadSettings() {
+        // Theme
+        const savedTheme = localStorage.getItem('app_theme') || 'light';
+        setTheme(savedTheme);
+        // Font Size
+        const savedSize = localStorage.getItem('app_fontSize') || '100';
+        document.getElementById('fontSizeSlider').value = savedSize;
+        setFontSize(savedSize);
+        // Font
+        const savedFont = localStorage.getItem('app_fontFamily') || 'font-manrope';
+        document.getElementById('fontSelect').value = savedFont;
+        setFontFamily(savedFont);
+        // Night Light
+        const savedNightLight = localStorage.getItem('app_nightLight') === 'true';
+        document.getElementById('nightLightToggle').checked = savedNightLight;
+        toggleNightLight();
+    }
+</script>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="closeSettings()"></div>
+    <div class="relative bg-surface rounded-2xl shadow-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-on-surface">Settings</h2>
+            <button onclick="closeSettings()" class="text-on-surface-variant hover:text-primary transition-colors p-1">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Theme -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Theme Mode</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setTheme('light')" id="theme-btn-light" class="p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-primary bg-primary/5 text-primary">Light</button>
+                    <button onclick="setTheme('dark')" id="theme-btn-dark" class="p-3 border rounded-xl text-sm font-medium hover:bg-surface-container transition-colors border-outline-variant/30 text-on-surface">Dark</button>
+                </div>
+            </div>
+
+            <!-- Font Size -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Text Size</label>
+                <input type="range" id="fontSizeSlider" min="80" max="150" value="100" class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" oninput="setFontSize(this.value)">
+                <div class="flex justify-between text-xs text-on-surface-variant mt-1">
+                    <span>A</span>
+                    <span class="text-base text-primary font-bold" id="fontSizeLabel">100%</span>
+                    <span class="text-lg">A</span>
+                </div>
+            </div>
+
+            <!-- Font Style -->
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-on-surface-variant">Font Style</label>
+                <select id="fontSelect" onchange="setFontFamily(this.value)" class="w-full p-3 bg-surface-container-lowest border border-outline-variant/30 rounded-xl text-sm outline-none focus:border-primary text-on-surface">
+                    <option value="font-manrope">Manrope (Modern)</option>
+                    <option value="font-inter">Inter (Classic)</option>
+                    <option value="font-serif">Serif (Reading)</option>
+                    <option value="font-monospace">Monospace (Code)</option>
+                </select>
+            </div>
+
+            <!-- Night Light -->
+            <div class="flex items-center justify-between border-t border-outline-variant/20 pt-5">
+                <label class="text-sm font-bold text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-orange-500">nights_stay</span>
+                    Night Light Filter
+                </label>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="nightLightToggle" class="sr-only peer" onchange="toggleNightLight()">
+                    <div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dark body { background-color: #121212; color: #e0e0e0; }
+.dark .bg-surface-container-lowest { background-color: #1e1e1e; border-color: #333; }
+.dark .text-on-surface { color: #f5f5f5; }
+.dark .bg-surface-container-high { background-color: #424242; }
+.dark .bg-surface { background-color: #212121; }
+/* Adding tailwind dark mode standard resets manually for elements that lack dark classes */
+</style>
+
+<!-- Profile Modal -->
+<div id="profile-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="closeProfileModal()"></div>
+    <div class="relative bg-surface rounded-2xl shadow-xl w-full max-w-sm p-6 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-primary to-primary-container z-0"></div>
+        <button onclick="closeProfileModal()" class="absolute top-3 right-3 text-white hover:text-white/80 transition-colors p-1 z-10 bg-black/20 rounded-full">
+            <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+        <div class="relative z-10 flex flex-col items-center mt-6">
+            <div class="w-20 h-20 bg-surface-container-lowest rounded-full p-1 shadow-md mb-3">
+                <div class="w-full h-full bg-primary/10 rounded-full flex items-center justify-center text-primary border border-outline-variant/30">
+                    <span class="material-symbols-outlined text-4xl">person</span>
+                </div>
+            </div>
+            <h2 class="text-xl font-bold text-on-surface" id="profile-name">User Name</h2>
+            <p class="text-xs font-bold text-primary tracking-wide uppercase mt-1" id="profile-role">Specific Role</p>
+        </div>
+        <div class="mt-6 space-y-4">
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Department</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-dept">Department</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Email Address</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-email">email@fintechco.com</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-outline">Employee ID</span>
+                    <span class="text-sm font-medium text-on-surface" id="profile-emp-id">EMP1000</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-outline">Location</span>
+                    <span class="text-sm font-medium text-on-surface" id="profile-location">City</span>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-outline">Date of Joining</span>
+                <span class="text-sm font-medium text-on-surface" id="profile-doj">YYYY-MM-DD</span>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center gap-2 text-xs text-outline justify-center">
+            <span class="material-symbols-outlined text-[14px]">lock</span>
+            <span>Confidential Data Secured</span>
+        </div>
+    </div>
+</div>
+
+<!-- Global Night Light Overlay -->
+<div id="night-light-overlay" class="fixed inset-0 bg-[#ff9000] mix-blend-multiply opacity-0 pointer-events-none transition-opacity duration-700 z-[9999]" style="mix-blend-mode: multiply;"></div>
+</body></html>
