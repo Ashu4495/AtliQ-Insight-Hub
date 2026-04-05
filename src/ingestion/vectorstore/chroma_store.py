@@ -194,23 +194,48 @@ def load_vectorstore(mode: str = "persistent") -> Chroma:
         vectorstore = Chroma(
             collection_name=COLLECTION_NAME,
             embedding_function=embedding_model,
-            client=client,
+            persist_directory=PERSIST_DIR,
         )
 
-        collection = client.get_collection(name=COLLECTION_NAME)
+        # Basic verification: check if collection exists and has documents
+        collection = vectorstore._collection
         doc_count = collection.count()
-        logger.info(f"Loaded existing vector store. Documents in collection: {doc_count}")
 
+        if doc_count == 0:
+             logger.warning("Vector store loaded but collection is empty. Forcing re-index.")
+             raise RuntimeError("Empty vector store.")
+
+        logger.info(f"Loaded existing vector store. Documents in collection: {doc_count}")
         return vectorstore
 
-    except RuntimeError:
-        raise  # re-raise our custom errors
-
     except Exception as e:
-        logger.exception("Failed to load vector store.")
-        raise RuntimeError(
-            f"Error loading vector store: {str(e)}"
-        ) from e
+        logger.warning(f"Failed to load vector store: {e}. Attempting automatic re-index...")
+        
+        try:
+            # Step 1: Clear the corrupted persist directory
+            if os.path.exists(PERSIST_DIR):
+                import shutil
+                shutil.rmtree(PERSIST_DIR)
+                logger.info(f"Cleared corrupted persist directory: {PERSIST_DIR}")
+
+            # Step 2: Trigger fresh ingestion
+            from src.ingestion.loader import load_and_split
+            documents = load_and_split()
+            
+            if not documents:
+                raise ValueError("No documents found in Data/ folder to re-index.")
+
+            # Step 3: Rebuild
+            vectorstore = build_vectorstore(documents, mode=mode)
+            logger.info("Vector store rebuilt successfully after failure.")
+            return vectorstore
+
+        except Exception as rebuild_error:
+            logger.exception("Automatic re-index failed.")
+            raise RuntimeError(
+                f"Critical Error: Vector store is corrupted and re-indexing failed. "
+                f"Original error: {str(e)}. Re-index error: {str(rebuild_error)}"
+            ) from rebuild_error
 
 
 # ──────────────────────────────────────────────
