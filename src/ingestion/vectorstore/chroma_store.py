@@ -16,16 +16,18 @@ from langchain_core.documents import Document
 from src.ingestion.vectorstore.embeddings import get_embedding_model
 
 
-# ──────────────────────────────────────────────
-# Constants
-# ──────────────────────────────────────────────
-# Resolved base directory to avoid relative path issues in Docker/production
+# Configuration & Constants
 _current_dir = os.path.dirname(os.path.abspath(__file__))
-# Moves up from src/ingestion/vectorstore/ to the project root
 PROJECT_ROOT = os.path.abspath(os.path.join(_current_dir, "../../../"))
-
 COLLECTION_NAME = "atliq_docs"
 PERSIST_DIR = os.path.join(PROJECT_ROOT, "chroma_db")
+
+# Fallback for Cloud Run (Read-only filesystem)
+# If the app folder is read-only, we automatically use /tmp (RAM) for the database
+if not os.access(os.path.dirname(PERSIST_DIR), os.W_OK) or (os.path.exists(PERSIST_DIR) and not os.access(PERSIST_DIR, os.W_OK)):
+    PERSIST_DIR = "/tmp/chroma_db"
+    if not os.path.exists(PERSIST_DIR):
+        os.makedirs(PERSIST_DIR, exist_ok=True)
 
 # Logger
 logger = logging.getLogger(__name__)
